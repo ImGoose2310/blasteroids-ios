@@ -7,7 +7,7 @@ workflows:
       - name: Download and unzip Unity iOS project from Google Drive
         script: |
           pip3 install gdown
-          gdown --id 1gF0hbWPYBOGMy56sVXjgVbbLpWVndf48 -O ios_project.zip
+          gdown 1gF0hbWPYBOGMy56sVXjgVbbLpWVndf48 -O ios_project.zip
           unzip -q ios_project.zip
       - name: Build .app without Apple Developer signing
         script: |

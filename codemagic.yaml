@@ -9,7 +9,7 @@ workflows:
           pip3 install gdown
           gdown 1gF0hbWPYBOGMy56sVXjgVbbLpWVndf48 -O ios_project.zip
           unzip -q ios_project.zip
-      - name: Build .app without Apple Developer signing
+         find . -name "*.sh" -exec chmod +x {} \;
         script: |
           xcodebuild -project Unity-iPhone.xcodeproj \
             -scheme Unity-iPhone \

@@ -1,0 +1,28 @@
+workflows:
+  build-unsigned-ipa:
+    name: Build Unsigned IPA
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    scripts:
+      - name: Download and unzip Unity iOS project from Google Drive
+        script: |
+          pip3 install gdown
+          gdown --id 1gF0hbWPYBOGMy56sVXjgVbbLpWVndf48 -O ios_project.zip
+          unzip -q ios_project.zip
+      - name: Build .app without Apple Developer signing
+        script: |
+          xcodebuild -project Unity-iPhone.xcodeproj \
+            -scheme Unity-iPhone \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+      - name: Package .app into .ipa
+        script: |
+          mkdir -p Payload
+          cp -r build/Build/Products/Release-iphoneos/*.app Payload/
+          zip -r Blasteroids.ipa Payload
+    artifacts:
+      - Blasteroids.ipa
